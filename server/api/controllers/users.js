@@ -1,3 +1,4 @@
+const bcrpyt = require('bcryptjs');
 const generatePassword = require('../helper/generatePassword');
 const { addUser, getUsers } = require('../models/usersModel');
 
@@ -15,7 +16,21 @@ const userRegister = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {};
+const loginUser = async (req, res) => {
+  const {
+    body: { password },
+    user,
+  } = req;
+
+  const passwordValid = bcrpyt.compareSync(password, user.password);
+  if (passwordValid) {
+    req.session.user = user;
+    return res.status(200).json({
+      message: `Welcome ${user.username}!`,
+    });
+  }
+  return res.status(400).json({ error: '🚪Thou Shalt Not Pass 🔑' });
+};
 
 const getAllUsers = async (req, res) => {
   try {
