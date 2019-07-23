@@ -41,4 +41,11 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { userRegister, getAllUsers, loginUser };
+const logout = (req, res) => {
+  if (req.session) {
+    req.session.destroy();
+  }
+  res.status(200).end();
+};
+
+module.exports = { userRegister, getAllUsers, loginUser, logout };

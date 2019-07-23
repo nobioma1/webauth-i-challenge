@@ -15,7 +15,6 @@ const findByUserId = id => {
 };
 
 const addUser = user => {
-  console.log(user);
   return db('users')
     .insert(user)
     .then(([ids]) => findByUserId(ids));
