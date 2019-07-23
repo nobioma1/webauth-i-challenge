@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const KnexSessionStore = require('connect-session-knex')(session);
 
 const userRouter = require('../api/routes/userRoutes');
 
@@ -19,6 +20,13 @@ server.use(
     },
     resave: false,
     saveUninitialized: true,
+    store: new KnexSessionStore({
+      knex: require('../data/dbConfig'),
+      tablename: 'sessions',
+      sidfieldname: 'sid',
+      createtable: true, 
+      clearInterval: 1000 * 60 * 60,
+    }),
   }),
 );
 
