@@ -7,6 +7,6 @@ const userRouter = express.Router();
 
 userRouter.post('/register', validateUserFields, userController.userRegister);
 userRouter.post('/login', validateUserFields, userController.loginUser);
-userRouter.get('/users', checkAuth, userController.getAllUsers);
+userRouter.get('/restricted/users', checkAuth, userController.getAllUsers);
 
 module.exports = userRouter;
