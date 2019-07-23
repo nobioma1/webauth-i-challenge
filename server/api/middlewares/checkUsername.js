@@ -5,6 +5,7 @@ module.exports = async (req, res, next) => {
   try {
     const user = await findByUsername(username);
     if (user) {
+      req.user = user;
       next();
     } else {
       res.status(400).json({ error: 'User with Username does not Exit ❗' });
