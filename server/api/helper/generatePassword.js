@@ -8,7 +8,7 @@ const generatePassword = password => {
 // custom crypt with md5
 
 const customCrypt = {
-  hash(rawPassword, iterations, salt) {
+  hash(rawPassword, iterations = 10, salt) {
     // computes random salt
     const randSalt = salt ? salt : new Date().getTime();
     // md5 the concatenated rawPassword + salt
@@ -25,8 +25,9 @@ const customCrypt = {
   compare(rawPassword, cryptHash) {
     // pull the number of iterations and the salt from the sillyBcryptHash
     const hashSplit = cryptHash.split('$');
+    const [, salt, iterations] = hashSplit;
     // recompute a hash
-    const passwordHash = this.hash(rawPassword, hashSplit[2], hashSplit[1]);
+    const passwordHash = this.hash(rawPassword, iterations, salt);
     // check that results are identical
     return passwordHash === cryptHash;
   },
