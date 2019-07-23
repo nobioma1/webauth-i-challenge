@@ -1,6 +1,6 @@
 const db = require('../../data/dbConfig');
 
-const findByUsername = ({ username }) => {
+const findByUsername = (username) => {
   return db('users')
     .select('id', 'username')
     .where({ username })
