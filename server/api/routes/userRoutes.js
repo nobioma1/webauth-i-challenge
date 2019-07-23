@@ -1,12 +1,12 @@
 const express = require('express');
 
-const validateUserFields = require('../middlewares/validateUserFields');
-const { userRegister, getAllUsers, loginUser } = require('../controllers/users');
+const { validateUserFields, checkAuth } = require('../middlewares');
+const userController = require('../controllers/users');
 
 const userRouter = express.Router();
 
-userRouter.post('/register', validateUserFields, userRegister);
-userRouter.post('/login', validateUserFields, loginUser);
-userRouter.get('/users', getAllUsers);
+userRouter.post('/register', validateUserFields, userController.userRegister);
+userRouter.post('/login', validateUserFields, userController.loginUser);
+userRouter.get('/users', checkAuth, userController.getAllUsers);
 
 module.exports = userRouter;
