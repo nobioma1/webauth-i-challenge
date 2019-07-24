@@ -1,8 +1,8 @@
 const db = require('../../data/dbConfig');
 
-const findByUsername = ({ username }) => {
+const findByUsername = (username) => {
   return db('users')
-    .select('id', 'username')
+    .select('id', 'username', 'password')
     .where({ username })
     .first();
 };
@@ -15,7 +15,6 @@ const findByUserId = id => {
 };
 
 const addUser = user => {
-  console.log(user);
   return db('users')
     .insert(user)
     .then(([ids]) => findByUserId(ids));
